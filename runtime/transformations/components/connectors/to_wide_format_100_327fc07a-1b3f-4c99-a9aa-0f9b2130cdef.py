@@ -3,19 +3,19 @@
 # to Wide Format
 
 ## Description
-Uses the pandas pivot funtion to convert a MultiTsFrame to a wide format DataFrame.
+Uses the pandas pivot method to convert a MultiTsFrame to a wide format DataFrame.
 
 ## Inputs
-* **multitsframe** (Pandas DataFrame): The input DataFrame in the format of a MultiTSFrame: The DataFrame must contain the columns "timestamp", "metric", "value", and possibly more
+* **multitsframe** (Pandas DataFrame): The input DataFrame in the format of a MultiTSFrame: The DataFrame should contain the columns "timestamp", "metric", "value", and possibly more
 (e.g. "longitude", "latitude"). The timestamp column should have dtype datetime64[ns, UTC], the "metric" column dtype string, and all other columns dtype float64.
-* **handle_multiple_value_columns** (String):  Should be one of ["drop", "flatten", "hierarchical"]. Use this parameter to specify how to handle columns additional to "timestamp", "metric", and "value" (e.g. "longitude", "latitude"). If this parameter is set to "drop", additional columns are ignored. Otherwise a MultiIndex is constructed. If "hierarchical", the MultiIndex is left hierarchical, if "flatten" it's flattened two a one-level index using the flattening_delimiter (e.g., "value.a", "value.b", "value.c", "longitude.a", ...). Default: "drop".
+* **handle_multiple_value_columns** (String):  Should be one of ["drop", "flatten", "hierarchical"]. Use this parameter to specify how to handle columns additional to "timestamp", "metric", and "value" (e.g. "longitude", "latitude"). If this parameter is set to "drop", additional columns are ignored. Otherwise a MultiIndex is constructed. If "hierarchical", the MultiIndex is left hierarchical, if "flatten" it's flattened to a one-level index using the flattening_delimiter (e.g., "value.a", "value.b", "value.c", "longitude.a", ...). Default: "drop".
 * **flattening_delimiter** (String): The delimiter used to flatten the index if handle_multiple_value_columns is "flatten". Default: ".".
 
 ## Outputs
-* **wide_format_timeseries_dataframe** (Pandas DataFrame): The output DataFrame in wide Format with one column for each metric if handle_multiple_value_columns = "drop" or multiple columns for each metric otherwise.
+* **wide_format_timeseries_dataframe** (Pandas DataFrame): The output DataFrame in wide format with one column for each metric if handle_multiple_value_columns = "drop" or multiple columns for each metric otherwise.
 
 ## Details
-Uses the pandas pivot function to convert a MultiTsFrame to a wide Format DataFrame.
+Uses the pandas pivot method to convert a MultiTsFrame to a wide format DataFrame.
 
 The input multitsframe is required to be a MultiTsFrame, that is, to contain a column "timestamp" of dtype datetime64[ns], a column "metric" of dtype str containing metric names, a column "value" of dtype float64, and possible more columns such as "longitude" and "latitude". Those additional columns are handled depending on the parameter handle_multiple_value_columns:
 

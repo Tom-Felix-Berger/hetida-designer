@@ -3,21 +3,21 @@
 # to Long Format
 
 ## Description
-Uses the pandas melt function to convert a wide format DataFrame to format MultiTsFrame.
+Uses the pandas melt method to convert a wide format timeseries DataFrame to a MultiTsFrame, i.e. a DataFrame representing timeseries data in long format.
 
 ## Inputs
 * **wide_format_timeseries_dataframe** (Pandas DataFrame): The input DataFrame which should consist of a timestamp column with dtype datetime64[ns,UTC] and for each metric one column (e.g., "a", "b", "c") or multiple columns (e.g., "value.a", "value.b", "value.c", "longitude.a", "longitude.b", "longitude.c", ...) with dtype float64.
-* **handle_multiple_value_columns_per_metric** (String): This parameter corresponds to the "handle_multiple_value_columns" parameter from the to Wide Format component and should be in {"drop", "flatten", "hierarchical"}. Use this parameter to specify if the passed DataFrame has only one column for each metric (in this case use "drop") or multiple, and if it has multiple, whether the column index is flattened ("timestamp", "value.a", ...) or hierarchical (MultiIndex([("timestamp", ""), ("value", "a"), ...]). Default: "drop".
-* **flattening_delimiter** (String): In case wide_format_timeseries_dataframe has a flattened column index, specify the delimiter (e.g., ".") used for flattening. Default: ".".
+* **handle_multiple_value_columns_per_metric** (String): This parameter corresponds to the "handle_multiple_value_columns" parameter from the to Wide Format component and has possible values "drop", "flatten" or "hierarchical". Use this parameter to specify if the passed DataFrame has only one column for each metric (in this case use "drop") or multiple, and if it has multiple, whether the column index is flattened ("timestamp", "value.a", ...) or hierarchical (MultiIndex([("timestamp", ""), ("value", "a"), ...]). Default: "drop".
+* **flattening_delimiter** (String): In case wide_format_timeseries_dataframe has a flattened column index, specify the delimiter (e.g., "."). Default: ".".
 
 ## Outputs
 * **multitsframe** (Pandas DataFrame): The output MultiTsFrame constructed from the DataFrame.
 
 ## Details
-Uses the pandas melt function to convert a wide format DataFrame to a long format MultiTsFrame.
+Uses the pandas melt method to convert a wide format DataFrame to a long format MultiTsFrame.
 
-In the input wide_format_timeseries_dataframe, the column "timestamp" of dtype datetime64[ns] is always required. Additional columns of dtype float64 are required depending on the setting of handle_multiple_value_columns_per_metric:
-If it is "drop", several columns named after metrics ("a", "b", ...) are expected.
+In the input wide_format_timeseries_dataframe, the column "timestamp" of dtype datetime64[ns] is always required. Additional columns of dtype float64 are required depending on the value of handle_multiple_value_columns_per_metric:
+If it is "drop", a column for each metric ("temperature", "humidity", ...) is expected.
 If it is "hierarchical", a hierarchical column index is expected, containing "timestamp", "value", and other properties (e.g., "longitude", "latitude") on level 0 and for each of these index level 0 values except timestamp the metric names on level 1. To illustrate, the column index should look like this: [("timestamp", ""), ("value", "a"), ("value", "b"), "("value", "c"), ("longitude", "a"), ("longitude", "b"), ...].
 If it is "flatten", the same columns are expected as for "hierarchical" but flattened to a one-level index using the flattening delimiter, for example: ["timestamp", "value.a", "value.b", "value.c", "longitude.a", "longitude.b", ...].
 
